@@ -1,0 +1,130 @@
+{
+  "env": {
+    "CLAUDE_CODE_USE_VERTEX": "1",
+    "ANTHROPIC_VERTEX_PROJECT_ID": "dev-digital-banno",
+    "CLOUD_ML_REGION": "global"
+  },
+  "permissions": {
+    "allow": [
+      "Grep",
+      "Glob",
+      "Read",
+      "List",
+      "Find",
+      "Search",
+      "Bash(*)",
+      "WebSearch"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "model": "claude-opus-5[1m]",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/WChen/.claude/hooks/peon-ping/peon.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/WChen/.claude/hooks/peon-ping/peon.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/WChen/.claude/hooks/peon-ping/peon.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/WChen/.claude/hooks/peon-ping/peon.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/WChen/.claude/hooks/peon-ping/peon.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "jh-platform-domains@christopherdavenport-work": true,
+    "jh-platform-infrastructure@christopherdavenport-work": true,
+    "go@christopherdavenport": true,
+    "spanner@christopherdavenport": true,
+    "pubsub@christopherdavenport": true,
+    "lit@christopherdavenport": true,
+    "lit-router@christopherdavenport": true,
+    "jh-design-system@christopherdavenport": true,
+    "typescript@christopherdavenport": true,
+    "banno-platform-domains@christopherdavenport-work": true,
+    "jh-enterprise-locator@christopherdavenport-work": true,
+    "web-component-router@christopherdavenport-work": true,
+    "jh-microservice@christopherdavenport-work": true,
+    "banno-platform-infrastructure@christopherdavenport-work": true,
+    "jh-golang-engineer@christopherdavenport-work": true,
+    "jh-frontend-engineer@christopherdavenport-work": true,
+    "jh-contracts-engineer@christopherdavenport-work": true,
+    "banno-nag-engineer@christopherdavenport-work": true,
+    "jh-ams-permissions-engineer@christopherdavenport-work": true,
+    "jh-deliverable-workspace@christopherdavenport-work": true,
+    "jack-henry-platform-intel@christopherdavenport-work": true,
+    "commit-story@christopherdavenport": true,
+    "excalidraw@christopherdavenport": true,
+    "financial-accounting@christopherdavenport": true,
+    "financial-regs@christopherdavenport": true,
+    "github-twin@christopherdavenport": true,
+    "sqlite@christopherdavenport": true
+  },
+  "extraKnownMarketplaces": {
+    "christopherdavenport-work": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/WChen/AI/christopherdavenport-work-marketplace"
+      }
+    },
+    "christopherdavenport": {
+      "source": {
+        "source": "github",
+        "repo": "ChristopherDavenport/christopherdavenport-marketplace"
+      }
+    }
+  },
+  "forceLoginMethod": "console",
+  "theme": "dark",
+  "autoUpdates": false
+}
