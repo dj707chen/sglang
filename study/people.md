@@ -5,9 +5,14 @@
 - https://www.linkedin.com/in/yingsheng1123/
 - https://github.com/Ying1123
 
-## Lianmin Zheng
+## Lianmin Zheng 郑怜悯
 
 Co-founder of LMSYS.org and creator/contributor to SGLang.
+郑怜悯是知名的计算机科学家与人工智能系统研究者，本科毕业于上海交通大学ACM班，后于加州大学伯克利分校（UC
+Berkeley）获得计算机科学博士学位，师从Ion Stoica和Joseph E. Gonzalez。他是大模型开源研究组织 LMSYS Org
+的联合创始人之一，并曾参与开发Alpa、SGLang 等知名开源大模型推理与分布式训练系统。
+
+- https://lmzheng.net/
 
 ## Liangsheng Yin 尹良升
 
