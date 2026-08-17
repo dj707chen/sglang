@@ -1,6 +1,6 @@
 # localRun Plan — SGLang on MacBook Pro M3 Pro
 
-Plan for [localRunGrafanaTUI.md](localRunGrafanaTUI.md).
+Plan for [localRunGrafanaTUI.md](Prompt_localRunGrafanaTUI).
 
 Status: **ALL PHASES COMPLETE** (2026-08-14) — 1, 6, 7, 3, 4, 2, 5.
 
