@@ -773,6 +773,8 @@ class Engine(EngineScoreMixin, EngineBase):
                 if server_args.revision:
                     cmd += ["--revision", server_args.revision]
 
+                # Spawn subprocess: one weight cache daemon per rank, running
+                # `python -m sglang.srt.weight_cache.daemon`.
                 proc = subprocess.Popen(cmd)
                 daemon_procs.append(proc)
 
@@ -894,6 +896,7 @@ class Engine(EngineScoreMixin, EngineBase):
                     )
 
                     with maybe_reindex_device_id(gpu_id) as gpu_id:
+                        # Spawn subprocess: one Scheduler per (pp_rank, tp_rank).
                         proc = mp.Process(
                             target=run_scheduler_process_func,
                             args=(
@@ -921,6 +924,8 @@ class Engine(EngineScoreMixin, EngineBase):
             # Launch the data parallel controller
             reader, writer = mp.Pipe(duplex=False)
             scheduler_pipe_readers = [reader]
+            # Spawn subprocess: the DataParallelController, which itself spawns
+            # the per-DP-rank Schedulers.
             proc = mp.Process(
                 target=run_data_parallel_controller_process,
                 kwargs=dict(
@@ -983,6 +988,7 @@ class Engine(EngineScoreMixin, EngineBase):
         names: List[str] = []
 
         if server_args.detokenizer_worker_num <= 1:
+            # Spawn subprocess: the single DetokenizerManager.
             proc = mp.Process(
                 target=run_detokenizer_process_func,
                 args=(server_args, port_args),
@@ -998,6 +1004,7 @@ class Engine(EngineScoreMixin, EngineBase):
             for i in range(server_args.detokenizer_worker_num):
                 worker_ipc = f"ipc://{tempfile.NamedTemporaryFile(delete=False).name}"
                 port_args.detokenizer_ipc_name = worker_ipc
+                # Spawn subprocess: one DetokenizerManager worker on its own IPC.
                 proc = mp.Process(
                     target=run_detokenizer_process_func,
                     args=(server_args, port_args),
@@ -1009,6 +1016,7 @@ class Engine(EngineScoreMixin, EngineBase):
         finally:
             port_args.detokenizer_ipc_name = router_ipc_name
 
+        # Spawn subprocess: the MultiDetokenizerRouter fanning out to the workers.
         router_proc = mp.Process(
             target=run_multi_detokenizer_router_process,
             args=(worker_ipc_names, server_args, port_args),

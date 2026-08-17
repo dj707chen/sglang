@@ -1,0 +1,18 @@
+# Model weights — large, shared across runs, never in git
+models/
+
+# Virtualenvs
+venvs/
+
+# Per-run generated artifacts
+*/logs/
+*/pcap/
+*/run/
+*/data/
+
+# Observability runtime state. The configs and dashboard JSON under obs/ ARE
+# tracked; the TSDB, Grafana's sqlite db and the rendered provisioning are not.
+*/obs/data/
+
+# macOS
+.DS_Store
