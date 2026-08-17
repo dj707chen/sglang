@@ -1,0 +1,5 @@
+
+Add this to the next prompt:
+    Save my ask and your response in CC_conv.md, update this file when the conversation proceeds.
+
+scripts to send requests to SGLang server.
