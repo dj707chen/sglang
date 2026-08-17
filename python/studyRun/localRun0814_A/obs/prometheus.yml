@@ -1,0 +1,48 @@
+# Prometheus config for the localRun0814_A study run.
+# Run explicitly by bin/start_obs.sh -- deliberately NOT via `brew services`,
+# so all config lives in this repo and nothing is installed at login.
+
+global:
+  # 2s. The default 15s would alias away everything interesting: a 0.6B model on
+  # M3 Pro decodes a 96-token response in ~1-2s, so at 15s resolution a whole
+  # request lifecycle can fall between two scrapes and simply never be seen.
+  scrape_interval: 2s
+  evaluation_interval: 15s
+  external_labels:
+    run: localRun0814_A
+    host: macbook-m3pro
+
+scrape_configs:
+  # --- The subject under study -----------------------------------------------
+  - job_name: sglang
+    metrics_path: /metrics
+    # 1s: fastest useful resolution. sglang's scheduler only refreshes its gauges
+    # every --decode-log-interval (20) iterations, so scraping faster than this
+    # buys nothing but CPU.
+    scrape_interval: 1s
+    scrape_timeout: 900ms
+    static_configs:
+      - targets: ["127.0.0.1:30000"]
+        labels:
+          component: sglang-server
+
+  # --- Host context (Q3: yes) -------------------------------------------------
+  # On a 36GB unified-memory laptop the KV pool, MLX wired memory, Grafana and
+  # the model all draw on the same pool -- memory pressure is frequently the real
+  # explanation for a latency spike, and it is invisible from sglang's own metrics.
+  - job_name: node
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["127.0.0.1:9100"]
+        labels:
+          component: host
+
+  # --- Prometheus watching itself --------------------------------------------
+  # Cheap, and it makes scrape failures against the sglang job diagnosable
+  # (scrape_duration_seconds, up, scrape_samples_scraped).
+  - job_name: prometheus
+    scrape_interval: 15s
+    static_configs:
+      - targets: ["127.0.0.1:9090"]
+        labels:
+          component: prometheus
