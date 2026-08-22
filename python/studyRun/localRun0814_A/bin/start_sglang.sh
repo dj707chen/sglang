@@ -10,6 +10,12 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/env.sh"
 [[ -x "$PY" ]]         || die "venv python not found at $PY"
 [[ -d "$MODEL_PATH" ]] || die "model not found at $MODEL_PATH"
 
+# A bare -d check is not enough: an interrupted `hf download` leaves the config
+# and tokenizer behind with no weights, so the dir exists but the server dies
+# much later with an opaque load error. Require actual weight bytes.
+compgen -G "$MODEL_PATH"/*.safetensors >/dev/null \
+  || die "no *.safetensors in $MODEL_PATH -- the download is metadata-only. See env.sh for the fetch command."
+
 if sglang_port_busy; then
   die "port $SGLANG_PORT is already in use. Run stop_sglang.sh first."
 fi

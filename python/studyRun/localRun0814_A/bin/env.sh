@@ -9,12 +9,38 @@ set -euo pipefail
 # work from any cwd.
 BIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RUN_DIR="$(cd "$BIN_DIR/.." && pwd)"
-REPO_ROOT="$(cd "$RUN_DIR/../.." && pwd)"
 STUDY_ROOT="$(cd "$RUN_DIR/.." && pwd)"
+# Three levels, not two: this run dir sits at <repo>/python/studyRun/<run>, so
+# "../.." is the `python/` package dir, not the checkout root.
+REPO_ROOT="$(cd "$RUN_DIR/../../.." && pwd)"
 
-VENV="$STUDY_ROOT/venvs/mps-py312"
+# The serving env used to live at $STUDY_ROOT/venvs/mps-py312, which was a
+# hand-rolled venv outside the repo. It is gone. The repo now builds the same
+# thing at <repo>/.venv via python/setup_env.sh -- Python 3.12, torch + MLX,
+# sglang installed editable -- so point at that instead of maintaining a second
+# copy. Override with SGLANG_STUDY_VENV to test against a different env.
+VENV="${SGLANG_STUDY_VENV:-$REPO_ROOT/.venv}"
 PY="$VENV/bin/python"
-MODEL_PATH="$STUDY_ROOT/models/Qwen3-0.6B"
+
+# Weights are NOT in the repo and not in the venv. Fetch them with fetch_model.sh.
+#
+# Source is ModelScope, not HuggingFace, and that is deliberate: Netskope blocks
+# the HF weight CDN here under category "Generative AI" (huggingface.co itself
+# is fine, so you get metadata and no weights). ModelScope serves the same Qwen
+# weights and is not blocked. See fetch_model.sh for the full diagnosis.
+#
+# bf16 rather than the mlx-community 4-bit build for the same reason -- the 4-bit
+# repo is HF-only. bf16 at 1.4 GB is fine for a 0.6B model on this machine.
+MODEL_SOURCE="${SGLANG_STUDY_MODEL_SOURCE:-modelscope}"   # modelscope | hf
+MODEL_REPO="${SGLANG_STUDY_MODEL_REPO:-Qwen/Qwen3-0.6B}"
+MODEL_PATH="${SGLANG_STUDY_MODEL:-$STUDY_ROOT/models/${MODEL_REPO##*/}}"
+
+# Merged certifi + corporate-root CA bundle. Netskope intercepts TLS to the
+# HuggingFace CDN with the `ca.jackhenry.goskope.com` root; curl trusts it via
+# the macOS keychain but Python's bundled certifi does not, so Python dies with
+# CERTIFICATE_VERIFY_FAILED where curl succeeds. fetch_model.sh builds this on
+# demand. Harmless when absent -- nothing else here needs it.
+CORP_CA_BUNDLE="${CORP_CA_BUNDLE:-$HOME/.config/certs/corp-ca-bundle.pem}"
 
 LOG_DIR="$RUN_DIR/logs"
 REQ_LOG_DIR="$LOG_DIR/requests"     # --log-requests-target writes <hostname>_<rank>.log here
