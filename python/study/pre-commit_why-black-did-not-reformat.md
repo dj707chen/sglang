@@ -51,7 +51,7 @@ commit time.
    ```
 
 2. `pre-commit` isn't on PATH at all, and neither is `black` — not globally, not
-   in `python/studyRun/venvs/mps-py312/bin/`.
+   in `python/studyIterations/venvs/mps-py312/bin/`.
 
    ```bash
    $ which pre-commit
@@ -99,7 +99,7 @@ cd /Users/WChen/AI/sglangTry/sglang
 pre-commit install                  # writes .git/hooks/pre-commit
 ```
 
-> **Why not `pip install` into the venv?** `python/studyRun/venvs/mps-py312/`
+> **Why not `pip install` into the venv?** `python/studyIterations/venvs/mps-py312/`
 > was created by `uv venv`, and **uv does not install pip into the venvs it
 > creates** — there is no `bin/pip`. You install into such a venv with the
 > external `uv` binary (`/Users/WChen/.local/bin/uv`, version 0.9.26, matching
@@ -158,7 +158,7 @@ black python/sglang/srt/entrypoints/engine.py
 
 (Again: not `pip install` — the venv has no pip. If you specifically want Black
 *inside* the serving venv rather than as a standalone tool, use
-`uv pip install --python python/studyRun/venvs/mps-py312 'black==26.1.0'`.)
+`uv pip install --python python/studyIterations/venvs/mps-py312 'black==26.1.0'`.)
 
 This is independent of the pre-commit cache — the two can coexist, but they only
 agree if the versions match.

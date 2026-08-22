@@ -96,7 +96,7 @@ package lives behind the optional `sglang[diffusion]` extra.
 
 It is tempting to justify the lazy imports as "keeps `sglang version` fast."
 **Measurement does not support that claim.** On this machine
-(`python/studyRun/venvs/mps-py312`):
+(`python/studyIterations/venvs/mps-py312`):
 
 | Step | Time | `torch` in `sys.modules`? |
 | --- | --- | --- |
