@@ -1,6 +1,12 @@
-# SGLang
+ # SGLang
 
 Structural Generation Language for LLM inferencing.
+
+## Best learning material:
+
+- DeeplearningAI's course [Efficient Inference with SGLang: Text and Image Generation](https://www.deeplearning.ai/courses/efficient-inference-with-sglang-text-and-image-generation)
+- [Awesome-ML-SYS-Tutorial](https://github.com/zhaochenyang20/Awesome-ML-SYS-Tutorial),
+  * especially the [Core Architecture and Optimization](https://github.com/zhaochenyang20/Awesome-ML-SYS-Tutorial/tree/b5040f71e57dc63c850b0bca9ab14304612b4055#core-architecture-and-optimization) section.
 
 ## Documentation by Mintlify
 
