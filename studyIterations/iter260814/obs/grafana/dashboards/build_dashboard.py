@@ -540,7 +540,7 @@ y += 8
 
 dashboard = {
     "uid": "sglang-runtime",
-    "title": "SGLang Runtime — localRun0814_A",
+    "title": "SGLang Runtime — iter260814",
     "description": (
         "SGLang on Apple M3 Pro via the MLX Metal backend. Every metric name "
         "here was verified against a live /metrics scrape. Panels deliberately "

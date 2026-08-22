@@ -4,7 +4,7 @@
 
 Add a README.md under /Users/WChen/AI/sglangTry/sglang/studyIterations to document that /Users/WChen/AI/sglangTry/sglang/python/setup_env.sh needs to be run first.
 
-Later (2026-08-22): document getting `localRun0814_A` running again — the stale venv and model paths, why HuggingFace downloads fail on this network, and the ModelScope + corporate-CA workaround.
+Later (2026-08-22): document getting `iter260814` running again — the stale venv and model paths, why HuggingFace downloads fail on this network, and the ModelScope + corporate-CA workaround.
 
 ## Overview
 
@@ -54,20 +54,20 @@ The run scripts each resolve their own interpreter:
 
 | Run | Defaults to | Overridable |
 | --- | --- | --- |
-| [localRun0813/config.sh](localRun0813/config.sh) | `localRun0813/.venv` | yes — `export VENV=<repo>/.venv` before calling `start.sh` |
-| [localRun0814_A/bin/env.sh](localRun0814_A/bin/env.sh) | `<repo>/.venv` | yes — `export SGLANG_STUDY_VENV=<path>` |
+| [iter260813/config.sh](iter260813/config.sh) | `iter260813/.venv` | yes — `export VENV=<repo>/.venv` before calling `start.sh` |
+| [iter260814/bin/env.sh](iter260814/bin/env.sh) | `<repo>/.venv` | yes — `export SGLANG_STUDY_VENV=<path>` |
 
-`localRun0814_A` used to expect `studyIterations/venvs/mps-py312` and needed a symlink;
+`iter260814` used to expect `studyIterations/venvs/mps-py312` and needed a symlink;
 it now points at `<repo>/.venv` directly, so `setup_env.sh` is all the venv
 setup it needs (weights are separate — see below).
 
-`localRun0813` still wants its own venv, which does not exist in a fresh
+`iter260813` still wants its own venv, which does not exist in a fresh
 checkout. Use the override instead — `<repo>/.venv` satisfies it, and its
 default `STUDY_MODEL_PATH` is the same `models/Qwen3-0.6B` that
 `fetch_model.sh` populates, so nothing else is needed:
 
 ```bash
-VENV="$(git rev-parse --show-toplevel)/.venv" ./localRun0813/start.sh
+VENV="$(git rev-parse --show-toplevel)/.venv" ./iter260813/start.sh
 ```
 
 If a run ever dies with `ModuleNotFoundError` for something you know is
@@ -81,13 +81,13 @@ Hugging Face hub id. `models/` is gitignored and not created by `setup_env.sh`,
 so you have to fetch them.
 
 ```bash
-./localRun0814_A/bin/fetch_model.sh          # Qwen/Qwen3-0.6B bf16 from ModelScope, ~1.4 GB
+./iter260814/bin/fetch_model.sh          # Qwen/Qwen3-0.6B bf16 from ModelScope, ~1.4 GB
 ```
 
 It is idempotent — it exits immediately if the weights are already there — and
 takes `--repo`, `--dest`, `--source hf|modelscope`, and `--force`. Current
 default lands `Qwen3-0.6B` (bf16, 1.4 GB) in `models/Qwen3-0.6B`, which is what
-[localRun0814_A/bin/env.sh](localRun0814_A/bin/env.sh) points at.
+[iter260814/bin/env.sh](iter260814/bin/env.sh) points at.
 
 ### Use ModelScope, not Hugging Face
 
@@ -133,7 +133,7 @@ On intercepted hosts the proxy presents a corporate root that lives in the macOS
 keychain. `curl` trusts it; Python's bundled `certifi` does not, so Python dies
 with `self-signed certificate in certificate chain` on hosts where `curl`
 succeeds. That is why the `curl` recipe in
-[localRun0813/NOTES.md](localRun0813/NOTES.md) worked where `hf` did not.
+[iter260813/NOTES.md](iter260813/NOTES.md) worked where `hf` did not.
 
 **This is not why ModelScope works** — ModelScope is not intercepted, and
 `modelscope download` succeeds with or without the bundle. Fixing the certs gets
@@ -160,10 +160,10 @@ SGLang has a first-class Apple Metal backend selected by `SGLANG_USE_MLX=1`;
 without it the runtime falls back to `torch.mps`, which is far less supported.
 See [apple_metal.mdx](../docs/docs/hardware-platforms/apple_metal.mdx).
 
-With the venv built and weights fetched, `localRun0814_A` is one button:
+With the venv built and weights fetched, `iter260814` is one button:
 
 ```bash
-cd localRun0814_A
+cd iter260814
 ./bin/restart_all.sh    # stop everything, start Prometheus/Grafana, start sglang, smoke test
 ./bin/status.sh         # one-shot snapshot: processes, endpoints, disk, latest logs
 ./bin/tui.sh            # live read-only dashboard

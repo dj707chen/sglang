@@ -1,5 +1,5 @@
 {
-  "__comment_how_this_file_came__": "curl http://localhost:30000/server_info | jq > studyIterations/localRun0814_A/mine/server_info.json",
+  "__comment_how_this_file_came__": "curl http://localhost:30000/server_info | jq > studyIterations/iter260814/mine/server_info.json",
   "model_path": "studyRun/models/Qwen3-0.6B",
   "tokenizer_path": "studyRun/models/Qwen3-0.6B",
   "tokenizer_mode": "auto",

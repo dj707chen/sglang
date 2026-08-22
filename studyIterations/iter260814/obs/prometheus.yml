@@ -1,4 +1,4 @@
-# Prometheus config for the localRun0814_A study run.
+# Prometheus config for the iter260814 study run.
 # Run explicitly by bin/start_obs.sh -- deliberately NOT via `brew services`,
 # so all config lives in this repo and nothing is installed at login.
 
@@ -9,7 +9,7 @@ global:
   scrape_interval: 2s
   evaluation_interval: 15s
   external_labels:
-    run: localRun0814_A
+    run: iter260814
     host: macbook-m3pro
 
 scrape_configs:

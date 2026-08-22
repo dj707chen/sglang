@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Single source of truth for the localRun0814_A study run.
+# Single source of truth for the iter260814 study run.
 # Sourced by every other script in bin/. Not meant to be executed directly.
 
 set -euo pipefail

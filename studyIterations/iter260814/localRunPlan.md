@@ -904,7 +904,7 @@ health checks.
 
 ## 7. Control scripts
 
-All under `studyIterations/localRun0814_A/bin/`, all `set -euo pipefail`, all safe to re-run.
+All under `studyIterations/iter260814/bin/`, all `set -euo pipefail`, all safe to re-run.
 
 | Script | Does |
 |---|---|
@@ -1006,7 +1006,7 @@ studyIterations/
 ├── .gitignore                  # models/ venvs/ logs/ pcap/ run/ data/
 ├── models/Qwen3-0.6B/          # already present (ModelScope)
 ├── venvs/mps-py312/            # already present
-└── localRun0814_A/
+└── iter260814/
     ├── localRunGrafanaTUI.md   # your request
     ├── localRunPlan.md         # this file, updated per phase
     ├── components.md           # Phase 2 deliverable

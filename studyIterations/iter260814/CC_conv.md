@@ -1,4 +1,4 @@
-# Claude Code Conversation Log — localRun0814_A
+# Claude Code Conversation Log — iter260814
 
 Running transcript of the working session behind [localRunPlan.md](localRunPlan.md).
 Appended to as the conversation proceeds.
@@ -11,7 +11,7 @@ Session started: 2026-08-14 · branch `localRun260814_A` · repo `@07821e9d56`
 
 ### User
 
-> /Users/WChen/AI/sglangTry/sglang/studyIterations/localRun0814_A/localRunGrafanaTUI.md
+> /Users/WChen/AI/sglangTry/sglang/studyIterations/iter260814/localRunGrafanaTUI.md
 
 (A pointer to the request document. Its contents, for the record:)
 
@@ -112,7 +112,7 @@ evidence, with packet capture last as the most likely to hit a macOS wall.
 
 ### Assistant
 
-Created this file (`studyIterations/localRun0814_A/CC_conv.md`) and backfilled Turn 1. Will
+Created this file (`studyIterations/iter260814/CC_conv.md`) and backfilled Turn 1. Will
 append each subsequent turn as the conversation proceeds.
 
 Note on scope: `localRunPlan.md` remains the *plan of record* (decisions and
