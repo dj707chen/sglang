@@ -1,8 +1,8 @@
-# studyRun
+# studyIterations
 
 ## Ask
 
-Add a README.md under /Users/WChen/AI/sglangTry/sglang/python/studyRun to document that /Users/WChen/AI/sglangTry/sglang/python/setup_env.sh needs to be run first.
+Add a README.md under /Users/WChen/AI/sglangTry/sglang/python/studyIterations to document that /Users/WChen/AI/sglangTry/sglang/python/setup_env.sh needs to be run first.
 
 Later (2026-08-22): document getting `localRun0814_A` running again — the stale venv and model paths, why HuggingFace downloads fail on this network, and the ModelScope + corporate-CA workaround.
 
@@ -57,7 +57,7 @@ The run scripts each resolve their own interpreter:
 | [localRun0813/config.sh](localRun0813/config.sh) | `localRun0813/.venv` | yes — `export VENV=<repo>/.venv` before calling `start.sh` |
 | [localRun0814_A/bin/env.sh](localRun0814_A/bin/env.sh) | `<repo>/.venv` | yes — `export SGLANG_STUDY_VENV=<path>` |
 
-`localRun0814_A` used to expect `studyRun/venvs/mps-py312` and needed a symlink;
+`localRun0814_A` used to expect `studyIterations/venvs/mps-py312` and needed a symlink;
 it now points at `<repo>/.venv` directly, so `setup_env.sh` is all the venv
 setup it needs (weights are separate — see below).
 
@@ -76,7 +76,7 @@ stale Python 3.11 leftover that is easy to land on by accident.
 
 ## Model weights
 
-Runs read weights from `studyRun/models/<model>` as a local directory, not a
+Runs read weights from `studyIterations/models/<model>` as a local directory, not a
 Hugging Face hub id. `models/` is gitignored and not created by `setup_env.sh`,
 so you have to fetch them.
 

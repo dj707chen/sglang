@@ -10,7 +10,7 @@ When you implement the plan phase by phase, update the plan doc with:
 1. Choose a small open weight LLM model, serve it via SGLang locally;
    - Tell me how you selected the model;
    - Where you tried to download from;
-   - When download the model, save it under studyRun/models so they could be shared, ignore this directory in git.
+   - When download the model, save it under studyIterations/models so they could be shared, ignore this directory in git.
 2. I'm interested in the details of major components (not limited, I may miss some):
    - API server, how the Rust server runs?
    - Tokenizer, TokenizerManager

@@ -10,7 +10,7 @@ set -euo pipefail
 BIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RUN_DIR="$(cd "$BIN_DIR/.." && pwd)"
 STUDY_ROOT="$(cd "$RUN_DIR/.." && pwd)"
-# Three levels, not two: this run dir sits at <repo>/python/studyRun/<run>, so
+# Three levels, not two: this run dir sits at <repo>/python/studyIterations/<run>, so
 # "../.." is the `python/` package dir, not the checkout root.
 REPO_ROOT="$(cd "$RUN_DIR/../../.." && pwd)"
 

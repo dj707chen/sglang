@@ -8,7 +8,7 @@ Companion to [localRunPlan.md](localRunPlan.md) (what was built and why) and
 ## Everyday commands
 
 ```bash
-cd studyRun/localRun0814_A
+cd studyIterations/localRun0814_A
 
 ./bin/restart_all.sh      # the big red button: stop everything, start it all, smoke test
 ./bin/status.sh           # what's up, what's down, where the logs are

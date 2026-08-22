@@ -103,7 +103,7 @@ It was **not** built in this checkout, and the plan rated it medium-high risk. I
 cleanly:
 
 ```
-$ VIRTUAL_ENV=studyRun/venvs/mps-py312 maturin develop --release
+$ VIRTUAL_ENV=studyIterations/venvs/mps-py312 maturin develop --release
 🐍 Found CPython 3.12 at .../mps-py312/bin/python
    Compiling sglang-server v0.1.0
     Finished `release` profile [optimized] target(s) in 1m 28s
@@ -121,7 +121,7 @@ Running with `SGLANG_RUST_SERVER=1`, it serves — and the Rust tracing logs int
 the Python ones:
 
 ```
-INFO sglang_server::tokenizer: loaded tokenizer path=studyRun/models/Qwen3-0.6B
+INFO sglang_server::tokenizer: loaded tokenizer path=studyIterations/models/Qwen3-0.6B
 INFO sglang_server::api_server::openai: loaded OpenAI chat template
 [2026-08-14 18:00:09] SGLANG_RUST_SERVER enabled, Rust server listen on 127.0.0.1:30000
 INFO sglang_server::api_server::log: 127.0.0.1 - "GET /health HTTP/1.1" 200 OK

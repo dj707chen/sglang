@@ -13,7 +13,7 @@
 # shellcheck disable=SC2155
 
 STUDY_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# studyRun/, the parent of this run directory: shared across runs, and where
+# studyIterations/, the parent of this run directory: shared across runs, and where
 # the downloaded model weights live.
 STUDY_ROOT="$(cd "$STUDY_DIR/.." && pwd)"
 REPO_DIR="$(cd "$STUDY_ROOT/.." && pwd)"

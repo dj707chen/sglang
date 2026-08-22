@@ -11,7 +11,7 @@ Session started: 2026-08-14 · branch `localRun260814_A` · repo `@07821e9d56`
 
 ### User
 
-> /Users/WChen/AI/sglangTry/sglang/studyRun/localRun0814_A/localRunGrafanaTUI.md
+> /Users/WChen/AI/sglangTry/sglang/studyIterations/localRun0814_A/localRunGrafanaTUI.md
 
 (A pointer to the request document. Its contents, for the record:)
 
@@ -28,7 +28,7 @@ Session started: 2026-08-14 · branch `localRun260814_A` · repo `@07821e9d56`
 > 1. Choose a small open weight LLM model, serve it via SGLang locally;
 >    - Tell me how you selected the model;
 >    - Where you tried to download from;
->    - When download the model, save it under studyRun/models so they could be shared,
+>    - When download the model, save it under studyIterations/models so they could be shared,
 >      ignore this directory in git.
 > 2. I'm interested in the details of major components (not limited, I may miss some):
 >    - API server, how the Rust server runs?
@@ -52,10 +52,10 @@ Ran a read-only environment audit, then wrote the plan to
 **Audit findings that shaped the plan:**
 
 - Machine: Apple M3 Pro, 36 GB unified memory, macOS 26.6.1.
-- `studyRun/venvs/mps-py312` already exists — Python 3.12.8 (uv-created, **no `pip`
+- `studyIterations/venvs/mps-py312` already exists — Python 3.12.8 (uv-created, **no `pip`
   module**), torch 2.11 with MPS available, MLX 0.32 / mlx-lm 0.31.3, and SGLang
   `0.5.18.dev494+g07821e9d5` installed **editable from this repo**.
-- `studyRun/models/Qwen3-0.6B` already downloaded — from **ModelScope** (the
+- `studyIterations/models/Qwen3-0.6B` already downloaded — from **ModelScope** (the
   `configuration.json` marker file is ModelScope-specific; the HF mirror omits it).
   `mlx-community/Qwen3-0.6B-4bit` also sits in the HF cache.
 - Support libs all present: `prometheus-client`, `pyzmq`, `psutil`, `setproctitle`,
@@ -112,7 +112,7 @@ evidence, with packet capture last as the most likely to hit a macOS wall.
 
 ### Assistant
 
-Created this file (`studyRun/localRun0814_A/CC_conv.md`) and backfilled Turn 1. Will
+Created this file (`studyIterations/localRun0814_A/CC_conv.md`) and backfilled Turn 1. Will
 append each subsequent turn as the conversation proceeds.
 
 Note on scope: `localRunPlan.md` remains the *plan of record* (decisions and
@@ -139,7 +139,7 @@ Executed Phase 1 on the stated defaults (Q1 → bf16). Full record in
 
 **Done:**
 
-- `studyRun/.gitignore` written and **verified with `git check-ignore -v`** rather than
+- `studyIterations/.gitignore` written and **verified with `git check-ignore -v`** rather than
   assumed — weights/venvs/logs/pcap/run ignored, docs and scripts tracked.
 - Directory layout created (`bin/ obs/ tui/ net/ logs/ pcap/ run/ data/`).
 - Model verified without a full load: 1.5 GB, **311 tensors**, bf16, GQA 16q/8kv, 28

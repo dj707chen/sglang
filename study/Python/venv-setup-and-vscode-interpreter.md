@@ -206,5 +206,5 @@ absolute path; Python adds every path in a `.pth` to `sys.path` at startup.
   (`uv pip install -e rust/sglang-server`). Not needed for Pylance — and note it
   cannot currently be rebuilt from scratch here, since the rust extension needs
   rustc ≥ 1.92 and this machine has 1.90.0.
-- `studyRun/venvs/mps-py312` (the MLX Metal serving env referenced in older notes)
+- `studyIterations/venvs/mps-py312` (the MLX Metal serving env referenced in older notes)
   no longer exists on disk as of 2026-08-17.

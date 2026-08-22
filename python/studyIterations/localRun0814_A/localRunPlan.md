@@ -31,11 +31,11 @@ Evidence gathered before writing this plan — this shapes every decision below.
 |---|---|
 | Machine | Apple M3 Pro, 36 GB unified memory, macOS 26.6.1 |
 | Repo | `/Users/WChen/AI/sglangTry/sglang` @ `07821e9d56`, branch `localRun260814_A` |
-| Venv | `studyRun/venvs/mps-py312` — Python 3.12.8, uv-created (**no `pip` module**, use `uv pip --python`) |
+| Venv | `studyIterations/venvs/mps-py312` — Python 3.12.8, uv-created (**no `pip` module**, use `uv pip --python`) |
 | SGLang | `0.5.18.dev494+g07821e9d5`, installed **editable** from `python/` — source edits take effect live |
 | torch | 2.11.0, `torch.backends.mps.is_available() == True` |
 | MLX | `mlx` 0.32.0, `mlx-metal` 0.32.0, `mlx-lm` 0.31.3 |
-| Model | `studyRun/models/Qwen3-0.6B` already present (bf16, 1.5 GB) |
+| Model | `studyIterations/models/Qwen3-0.6B` already present (bf16, 1.5 GB) |
 | Also cached | `~/.cache/huggingface/hub/models--mlx-community--Qwen3-0.6B-4bit` |
 | Rust | cargo 1.90.0 installed; repo pins toolchain **1.92** (`rust/rust-toolchain.toml`) |
 | Rust server | `rust/sglang-server` = maturin/pyo3 ext module `_core`. **Not built** (`import _core` fails) |
@@ -87,15 +87,15 @@ Useful to demo the MLX pre-quantized load path against bf16 without a new downlo
 
 ```bash
 SGLANG_USE_MLX=1 python -m sglang.launch_server \
-  --model-path studyRun/models/Qwen3-0.6B \
+  --model-path studyIterations/models/Qwen3-0.6B \
   --host 127.0.0.1 --port 30000 \
   --disable-cuda-graph \
   --enable-metrics \
   ...logging flags from Phase 6...
 ```
 
-- Model downloads, if any, go to `studyRun/models/`.
-- `studyRun/` gets a `.gitignore` (`models/`, `venvs/`, `logs/`, `pcap/`, `data/`) so
+- Model downloads, if any, go to `studyIterations/models/`.
+- `studyIterations/` gets a `.gitignore` (`models/`, `venvs/`, `logs/`, `pcap/`, `data/`) so
   weights and captures never enter git. The plan/doc/scripts **do** stay tracked.
 
 **Open question for you (Q1):** bf16 as primary, or should I make the 4-bit MLX build the
@@ -104,7 +104,7 @@ understanding components.
 
 ### ✅ Decisions made (executed 2026-08-14 16:36)
 
-1. **Primary model = `Qwen3-0.6B` bf16** from `studyRun/models/`, on the Q1 default. Not
+1. **Primary model = `Qwen3-0.6B` bf16** from `studyIterations/models/`, on the Q1 default. Not
    re-downloaded — verified the existing copy instead (see below).
 2. **Provenance recorded: ModelScope mirror of upstream `Qwen/Qwen3-0.6B`.** The README is
    the upstream Qwen model card (its links point at `huggingface.co/Qwen/Qwen3-0.6B`), but
@@ -116,7 +116,7 @@ understanding components.
    land in Phase 6, `--enable-metrics` in Phase 3.
 4. **Left the server running** after the phase so Phases 6/7/3/4 can attach to it rather
    than pay startup again.
-5. **`studyRun/.gitignore` written and verified with `git check-ignore -v`** rather than
+5. **`studyIterations/.gitignore` written and verified with `git check-ignore -v`** rather than
    assumed: `models/`, `venvs/`, and per-run `*/logs/ */pcap/ */run/ */data/` are ignored;
    `localRunPlan.md`, `CC_conv.md` and the scripts stay tracked.
 
@@ -131,7 +131,7 @@ Tensor count reconciles exactly: 28 layers × 11 tensors + `embed_tokens` + `lm_
 **Launch command actually used:**
 ```bash
 SGLANG_USE_MLX=1 python -m sglang.launch_server \
-  --model-path studyRun/models/Qwen3-0.6B \
+  --model-path studyIterations/models/Qwen3-0.6B \
   --host 127.0.0.1 --port 30000 \
   --disable-cuda-graph
 ```
@@ -904,7 +904,7 @@ health checks.
 
 ## 7. Control scripts
 
-All under `studyRun/localRun0814_A/bin/`, all `set -euo pipefail`, all safe to re-run.
+All under `studyIterations/localRun0814_A/bin/`, all `set -euo pipefail`, all safe to re-run.
 
 | Script | Does |
 |---|---|
@@ -1002,7 +1002,7 @@ non-zero on any failure so it works as a gate in `restart_all.sh`.
 ## Proposed layout
 
 ```
-studyRun/
+studyIterations/
 ├── .gitignore                  # models/ venvs/ logs/ pcap/ run/ data/
 ├── models/Qwen3-0.6B/          # already present (ModelScope)
 ├── venvs/mps-py312/            # already present

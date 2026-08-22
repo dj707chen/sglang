@@ -16,7 +16,7 @@ Everything below was observed on this machine, serving `Qwen/Qwen3-0.6B`
 ## Quick start
 
 ```bash
-cd studyRun/localRun0813
+cd studyIterations/localRun0813
 ./start.sh              # boot the server, wait for /health, print the process tree
 ./test.sh               # exercise /generate, /v1/chat/completions, SSE, 4-way concurrency
 ./.venv/bin/python monitor.py   # live process + metrics view (Ctrl-C to quit)
@@ -39,15 +39,15 @@ pid in `run/server.pid`.
 
 ## What the setup looks like
 
-**Interpreter.** `studyRun/localRun0813/.venv` (CPython 3.12.8). The repo's own `.venv` is
+**Interpreter.** `studyIterations/localRun0813/.venv` (CPython 3.12.8). The repo's own `.venv` is
 Python 3.14 built against `python/pyproject.toml`, which pins CUDA-only wheels
 (`flashinfer`, `cuda-python`, `sgl-deep-gemm`) and cannot be installed on
 macOS. The Apple Silicon path uses a different pyproject:
 
 ```bash
-uv venv -p 3.12 studyRun/localRun0813/.venv
+uv venv -p 3.12 studyIterations/localRun0813/.venv
 cp python/pyproject_other.toml python/pyproject.toml     # temporarily
-SGLANG_BUILD_RUST_EXTS=none uv pip install --python studyRun/localRun0813/.venv/bin/python -e "python[srt_mps]"
+SGLANG_BUILD_RUST_EXTS=none uv pip install --python studyIterations/localRun0813/.venv/bin/python -e "python[srt_mps]"
 git checkout python/pyproject.toml                        # put it back
 ```
 
@@ -55,10 +55,10 @@ git checkout python/pyproject.toml                        # put it back
 `runtime_common` set. Python 3.12 rather than 3.14 because `outlines-core
 0.1.26` ships no cp314 wheel and its PyO3 0.22 build rejects 3.14.
 
-**Model.** `studyRun/models/Qwen3-0.6B`, 1.5 GB of bf16 safetensors. Fetched
+**Model.** `studyIterations/models/Qwen3-0.6B`, 1.5 GB of bf16 safetensors. Fetched
 from ModelScope, not Hugging Face — see [Local gotchas](#local-gotchas).
 
-**TLS.** `studyRun/localRun0813/.venv/.../sitecustomize.py` calls `truststore.inject_into_ssl()`
+**TLS.** `studyIterations/localRun0813/.venv/.../sitecustomize.py` calls `truststore.inject_into_ssl()`
 so Python verifies against the macOS keychain. Without it every HTTPS call
 fails with `self-signed certificate in certificate chain`, because the
 corporate proxy re-signs traffic with a root CA that `certifi` does not carry.
@@ -281,7 +281,7 @@ narrow that list, never widen it — so it was built by hand:
 ```bash
 cd rust
 RUSTFLAGS="-C link-arg=-undefined -C link-arg=dynamic_lookup" \
-  PYO3_PYTHON=../studyRun/localRun0813/.venv/bin/python \
+  PYO3_PYTHON=../studyIterations/localRun0813/.venv/bin/python \
   cargo build --release -p sglang-server
 mkdir -p ../python/sglang/srt/server
 cp target/release/libsglang_server.dylib ../python/sglang/srt/server/_core.so
