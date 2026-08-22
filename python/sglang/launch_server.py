@@ -8,6 +8,7 @@ import os
 import sys
 import warnings
 
+from sglang.srt.plugins import load_plugins
 from sglang.srt.server_args import prepare_server_args
 from sglang.srt.utils import kill_process_tree
 from sglang.srt.utils.common import suppress_noisy_warnings
@@ -28,7 +29,7 @@ def run_server(server_args):
                 f"(smg_grpc_mode={server_args.smg_grpc_mode}, "
                 f"grpc_mode={server_args.grpc_mode}) -> serve_grpc_encoder"
             )
-            from sglang.srt.disaggregation.encode_grpc_server import (
+            from sglang.srt.disaggregation.encoder.grpc_server import (
                 serve_grpc_encoder,
             )
 
@@ -38,7 +39,7 @@ def run_server(server_args):
                 "run_server: encoder_only, HTTP path "
                 "(smg_grpc_mode=False, grpc_mode=False) -> encode_server.launch_server"
             )
-            from sglang.srt.disaggregation.encode_server import launch_server
+            from sglang.srt.disaggregation.encoder.http_server import launch_server
 
             launch_server(server_args)
     elif server_args.smg_grpc_mode:
@@ -84,8 +85,6 @@ if __name__ == "__main__":
         UserWarning,
         stacklevel=1,
     )
-
-    from sglang.srt.plugins import load_plugins
 
     load_plugins()
 
