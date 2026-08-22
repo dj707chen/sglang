@@ -16,6 +16,7 @@ STUDY_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # studyIterations/, the parent of this run directory: shared across runs, and where
 # the downloaded model weights live.
 STUDY_ROOT="$(cd "$STUDY_DIR/.." && pwd)"
+# studyIterations/ now sits at the checkout root, so this is the repo itself.
 REPO_DIR="$(cd "$STUDY_ROOT/.." && pwd)"
 
 # --- Python environment -------------------------------------------------

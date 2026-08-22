@@ -2,7 +2,7 @@
 
 ## Ask
 
-Add a README.md under /Users/WChen/AI/sglangTry/sglang/python/studyIterations to document that /Users/WChen/AI/sglangTry/sglang/python/setup_env.sh needs to be run first.
+Add a README.md under /Users/WChen/AI/sglangTry/sglang/studyIterations to document that /Users/WChen/AI/sglangTry/sglang/python/setup_env.sh needs to be run first.
 
 Later (2026-08-22): document getting `localRun0814_A` running again — the stale venv and model paths, why HuggingFace downloads fail on this network, and the ModelScope + corporate-CA workaround.
 
@@ -34,7 +34,7 @@ the CUDA/Linux build and does not resolve on macOS, and Homebrew's default
 `python3` is too new for the platform pins. The script swaps in
 `pyproject_other.toml` for the duration of the install and restores it
 afterwards, so `git status` stays clean. Full rationale:
-[SETUP_ENV.md](../SETUP_ENV.md).
+[SETUP_ENV.md](../python/SETUP_ENV.md).
 
 Useful variations:
 
@@ -158,7 +158,7 @@ entirely, so it cannot use the bundle at all.
 
 SGLang has a first-class Apple Metal backend selected by `SGLANG_USE_MLX=1`;
 without it the runtime falls back to `torch.mps`, which is far less supported.
-See [apple_metal.mdx](../../docs/docs/hardware-platforms/apple_metal.mdx).
+See [apple_metal.mdx](../docs/docs/hardware-platforms/apple_metal.mdx).
 
 With the venv built and weights fetched, `localRun0814_A` is one button:
 

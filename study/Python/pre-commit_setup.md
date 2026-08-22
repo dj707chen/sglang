@@ -34,7 +34,7 @@ hook envs: ~/.cache/pre-commit/ holds 9 built repo environments
            (repo1ix7lkrk, repo7mubs4ql, ... ) plus db.db
 ```
 
-Do **not** `pip install pre-commit` into `python/studyIterations/venvs/mps-py312` — that
+Do **not** `pip install pre-commit` into `studyIterations/venvs/mps-py312` — that
 venv was made by `uv venv` and has no `bin/pip`. `pre-commit` is a developer tool,
 not an sglang runtime dependency, so it belongs in `uv tool` on PATH anyway.
 

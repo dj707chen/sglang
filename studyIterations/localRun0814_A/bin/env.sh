@@ -10,9 +10,9 @@ set -euo pipefail
 BIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RUN_DIR="$(cd "$BIN_DIR/.." && pwd)"
 STUDY_ROOT="$(cd "$RUN_DIR/.." && pwd)"
-# Three levels, not two: this run dir sits at <repo>/python/studyIterations/<run>, so
-# "../.." is the `python/` package dir, not the checkout root.
-REPO_ROOT="$(cd "$RUN_DIR/../../.." && pwd)"
+# This run dir sits at <repo>/studyIterations/<run>, so the checkout root is two
+# levels up -- i.e. $STUDY_ROOT's parent.
+REPO_ROOT="$(cd "$RUN_DIR/../.." && pwd)"
 
 # The serving env used to live at $STUDY_ROOT/venvs/mps-py312, which was a
 # hand-rolled venv outside the repo. It is gone. The repo now builds the same
