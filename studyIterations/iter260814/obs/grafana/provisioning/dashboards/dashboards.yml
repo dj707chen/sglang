@@ -1,0 +1,16 @@
+apiVersion: 1
+
+providers:
+  - name: sglang-study
+    orgId: 1
+    folder: "SGLang Study"
+    type: file
+    disableDeletion: false
+    # Reload from disk every 10s so editing the JSON is a fast loop.
+    updateIntervalSeconds: 10
+    allowUiUpdates: true
+    options:
+      # Absolute path is injected by bin/start_obs.sh via GF_PATHS_PROVISIONING
+      # rewriting; see that script. Kept relative-looking here for readability.
+      path: __DASHBOARD_DIR__
+      foldersFromFilesStructure: false
