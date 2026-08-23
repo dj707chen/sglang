@@ -1,9 +1,6 @@
 # Model weights — large, shared across runs, never in git
 models/
 
-# Virtualenvs
-venvs/
-
 # Per-run generated artifacts
 */logs/
 */pcap/

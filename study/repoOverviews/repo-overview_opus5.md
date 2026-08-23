@@ -92,9 +92,9 @@ This is the single most important thing to internalize. SGLang is **not** one pr
    back to TokenizerManager → resolves the asyncio future → SSE stream
 ```
 
-Channels are declared in one place — `PortArgs` in [server_args.py:9668](../sglang/srt/server_args.py#L9668): `tokenizer_ipc_name`, `scheduler_input_ipc_name`, `detokenizer_ipc_name`, `rpc_ipc_name`, `metrics_ipc_name`. Single-node uses `ipc://` unix sockets; multi-node switches to `tcp://`.
+Channels are declared in one place — `PortArgs` in [server_args.py:9668](../../python/sglang/srt/server_args.py#L9668): `tokenizer_ipc_name`, `scheduler_input_ipc_name`, `detokenizer_ipc_name`, `rpc_ipc_name`, `metrics_ipc_name`. Single-node uses `ipc://` unix sockets; multi-node switches to `tcp://`.
 
-Spawning lives in `Engine._launch_subprocesses` ([engine.py:1036](../sglang/srt/entrypoints/engine.py#L1036)). Variants it handles: `node_rank >= 1` (no tokenizer at all, just block on schedulers), `tokenizer_worker_num > 1` (a `MultiTokenizerRouter`), `SGLANG_RUST_SERVER=1` (the Rust crate hosts HTTP + tokenize + detokenize inside the rank-0 scheduler, and the Python processes above are skipped entirely).
+Spawning lives in `Engine._launch_subprocesses` ([engine.py:1036](../../python/sglang/srt/entrypoints/engine.py#L1036)). Variants it handles: `node_rank >= 1` (no tokenizer at all, just block on schedulers), `tokenizer_worker_num > 1` (a `MultiTokenizerRouter`), `SGLANG_RUST_SERVER=1` (the Rust crate hosts HTTP + tokenize + detokenize inside the rank-0 scheduler, and the Python processes above are skipped entirely).
 
 ---
 
@@ -102,7 +102,7 @@ Spawning lives in `Engine._launch_subprocesses` ([engine.py:1036](../sglang/srt/
 
 `Scheduler` is the heart. Its `__init__` is pure orchestration: ~40 `init_*` methods (`init_memory_pools`, `init_all_attention_backends`, `init_all_cuda_graphs`, `init_disaggregation`, `init_overlap`, …). The repo enforces this style — see `.claude/skills/large-class-style/`.
 
-Two loops, dispatched by `run_event_loop()` ([scheduler.py:1653](../sglang/srt/managers/scheduler.py#L1653)):
+Two loops, dispatched by `run_event_loop()` ([scheduler.py:1653](../../python/sglang/srt/managers/scheduler.py#L1653)):
 
 ```
 event_loop_normal()                    event_loop_overlap()   ← default
@@ -143,7 +143,7 @@ The overlap loop is the "zero-overhead CPU scheduler" from the v0.4 blog: batch 
                         ScheduleBatch  ──►  run_batch()
 ```
 
-Prefill is preferred over decode when it fits — that's continuous batching. Under KV pressure, running requests are **retracted** (their KV freed, pushed back to the queue) rather than the server OOM-ing. `ForwardMode` ∈ `{EXTEND, DECODE, MIXED, IDLE, TARGET_VERIFY, DRAFT_EXTEND, PREBUILT, SPLIT_PREFILL, DLLM_EXTEND}` ([forward_batch_info.py:98](../sglang/srt/model_executor/forward_batch_info.py#L98)).
+Prefill is preferred over decode when it fits — that's continuous batching. Under KV pressure, running requests are **retracted** (their KV freed, pushed back to the queue) rather than the server OOM-ing. `ForwardMode` ∈ `{EXTEND, DECODE, MIXED, IDLE, TARGET_VERIFY, DRAFT_EXTEND, PREBUILT, SPLIT_PREFILL, DLLM_EXTEND}` ([forward_batch_info.py:98](../../python/sglang/srt/model_executor/forward_batch_info.py#L98)).
 
 There is a repo rule worth knowing: **`ScheduleBatch` fields are rebound, never mutated in place** (`.claude/rules/schedule-batch-out-of-place-mutation.md`), because the overlap loop holds `batch.copy()` snapshots in `result_queue`.
 

@@ -2,7 +2,7 @@
 
 ## Ask
 
-Add a README.md under /Users/WChen/AI/sglangTry/sglang/studyIterations to document that /Users/WChen/AI/sglangTry/sglang/python/setup_env.sh needs to be run first.
+Add a README.md under /Users/WChen/AI/sglangTry/sglang/studyIterations to document that /Users/WChen/AI/sglangTry/sglang/studyIterations/setup_env.sh needs to be run first.
 
 Later (2026-08-22): document getting `iter260814` running again — the stale venv and model paths, why HuggingFace downloads fail on this network, and the ModelScope + corporate-CA workaround.
 
@@ -19,12 +19,11 @@ working material and is not imported by anything under `python/sglang/`.
 
 ```bash
 # from the repo root
-cd python
-./setup_env.sh
-source ../.venv/bin/activate
+./studyIterations/setup_env.sh
+source .venv/bin/activate
 ```
 
-`python/setup_env.sh` creates `<repo>/.venv` and installs SGLang into it as an
+`studyIterations/setup_env.sh` creates `<repo>/.venv` and installs SGLang into it as an
 **editable** install, using the pyproject that matches this machine. On Apple
 Silicon it auto-detects the `mps` variant, builds the venv on Python 3.12, and
 installs the `all_mps` extra (MLX + `torch` MPS build).
@@ -34,15 +33,15 @@ the CUDA/Linux build and does not resolve on macOS, and Homebrew's default
 `python3` is too new for the platform pins. The script swaps in
 `pyproject_other.toml` for the duration of the install and restores it
 afterwards, so `git status` stays clean. Full rationale:
-[SETUP_ENV.md](../python/SETUP_ENV.md).
+[SETUP_ENV.md](SETUP_ENV.md).
 
 Useful variations:
 
 ```bash
-./python/setup_env.sh --extras dev_mps   # also install test dependencies
-./python/setup_env.sh --variant empty    # pure-Python subset, no torch
-./python/setup_env.sh --recreate         # rebuild the venv from scratch
-./python/setup_env.sh --help
+./studyIterations/setup_env.sh --extras dev_mps   # also install test dependencies
+./studyIterations/setup_env.sh --variant empty    # pure-Python subset, no torch
+./studyIterations/setup_env.sh --recreate         # rebuild the venv from scratch
+./studyIterations/setup_env.sh --help
 ```
 
 Editable matters: the run scripts exercise the code in this checkout, so edits

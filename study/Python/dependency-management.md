@@ -1,7 +1,7 @@
 # How dependencies are managed in the sglang repo
 
-Date: 2026-08-12 — based on reading [python/pyproject.toml](../pyproject.toml),
-[python/setup.py](../setup.py), the platform pyproject variants, the Docker / CI
+Date: 2026-08-12 — based on reading [python/pyproject.toml](../../python/pyproject.toml),
+[python/setup.py](../../python/setup.py), the platform pyproject variants, the Docker / CI
 install scripts, and the release tooling.
 
 ## There is no lockfile
@@ -17,27 +17,27 @@ is committed.
 
 | Artifact | Manifest | Build backend |
 | --- | --- | --- |
-| `sglang` | [python/pyproject.toml](../pyproject.toml) | setuptools + setuptools-rust + setuptools-scm |
-| `sglang-kernel` (AOT CUDA kernels) | [python/sglang/kernels/aot/pyproject.toml](../sglang/kernels/aot/pyproject.toml) | scikit-build-core (CMake) |
+| `sglang` | [python/pyproject.toml](../../python/pyproject.toml) | setuptools + setuptools-rust + setuptools-scm |
+| `sglang-kernel` (AOT CUDA kernels) | [python/sglang/kernels/aot/pyproject.toml](../../python/sglang/kernels/aot/pyproject.toml) | scikit-build-core (CMake) |
 | Rust PyO3 extensions | [rust/Cargo.toml](../../rust/Cargo.toml) workspace | cargo, built *into* the sglang wheel |
 | sgl-router / model-gateway | [experimental/sgl-router/](../../experimental/sgl-router/), [sgl-model-gateway/](../../sgl-model-gateway/) | separate |
 
 `sglang` depends on `sglang-kernel` as an ordinary version pin
-([pyproject.toml:73](../pyproject.toml#L73)) even though it is built from this
+([pyproject.toml:73](../../python/pyproject.toml#L73)) even though it is built from this
 same tree — the kernel package releases on its own cadence via
 [scripts/release/bump_kernel_version.py](../../scripts/release/bump_kernel_version.py).
 
 ## The `cp pyproject_X.toml pyproject.toml` swap
 
-The checked-in [pyproject.toml](../pyproject.toml) is **the CUDA one**. Other
+The checked-in [pyproject.toml](../../python/pyproject.toml) is **the CUDA one**. Other
 platforms overwrite it before installing:
 
 | Variant | Consumers |
 | --- | --- |
-| [pyproject_cpu.toml](../pyproject_cpu.toml) | [xeon.Dockerfile:41](../../docker/xeon.Dockerfile#L41), [arm64.Dockerfile:43](../../docker/arm64.Dockerfile#L43) — publishes under a *different distribution name*, `sglang-cpu` |
-| [pyproject_other.toml](../pyproject_other.toml) | ROCm, MUSA, Apple Metal, MThreads — [rocm.Dockerfile:322](../../docker/rocm.Dockerfile#L322), [amd_ci_install_dependency.sh:133](../../scripts/ci/amd/amd_ci_install_dependency.sh#L133) |
-| [pyproject_npu.toml](../pyproject_npu.toml) | [npu.Dockerfile:96](../../docker/npu.Dockerfile#L96) |
-| [pyproject_xpu.toml](../pyproject_xpu.toml) | [xpu.Dockerfile:77](../../docker/xpu.Dockerfile#L77) |
+| [pyproject_cpu.toml](../../python/pyproject_cpu.toml) | [xeon.Dockerfile:41](../../docker/xeon.Dockerfile#L41), [arm64.Dockerfile:43](../../docker/arm64.Dockerfile#L43) — publishes under a *different distribution name*, `sglang-cpu` |
+| [pyproject_other.toml](../../python/pyproject_other.toml) | ROCm, MUSA, Apple Metal, MThreads — [rocm.Dockerfile:322](../../docker/rocm.Dockerfile#L322), [amd_ci_install_dependency.sh:133](../../scripts/ci/amd/amd_ci_install_dependency.sh#L133) |
+| [pyproject_npu.toml](../../python/pyproject_npu.toml) | [npu.Dockerfile:96](../../docker/npu.Dockerfile#L96) |
+| [pyproject_xpu.toml](../../python/pyproject_xpu.toml) | [xpu.Dockerfile:77](../../docker/xpu.Dockerfile#L77) |
 
 So the dependency list is duplicated 5×, and the variants drift deliberately:
 
@@ -66,18 +66,18 @@ In the CUDA file: `test` → `dev` → `all`, plus feature extras (`diffusion`,
 
 ## Pinning conventions
 
-- Alphabetical order is a stated rule ([pyproject.toml:17](../pyproject.toml#L17)).
+- Alphabetical order is a stated rule ([pyproject.toml:17](../../python/pyproject.toml#L17)).
 - Exact pins carry a *reason comment* inline. Examples:
-  [`cuda-tile==1.6.0rc5`](../pyproject.toml#L27-L28) — "1.6.0rc6 shipped no cp310
+  [`cuda-tile==1.6.0rc5`](../../python/pyproject.toml#L27-L28) — "1.6.0rc6 shipped no cp310
   linux x86_64 wheel"; the `compressed-tensors==0.15.0` note in
-  [pyproject_other.toml](../pyproject_other.toml#L113-L116) about pip backtracking
+  [pyproject_other.toml](../../python/pyproject_other.toml#L113-L116) about pip backtracking
   into an unbuildable ancient setuptools sdist.
 - Platform availability uses PEP 508 markers rather than more variants where
   possible — see the `aarch64` / `arm64` guards on `av`, `decord2`, `torchcodec`,
   `st_attn`, `vsa`.
 - Cross-file pin coupling is flagged in comments, e.g. flashinfer must "keep it
   aligned with jit-cache version in Dockerfile"
-  ([pyproject.toml:36](../pyproject.toml#L36)).
+  ([pyproject.toml:36](../../python/pyproject.toml#L36)).
 
 ## Things that can't live in pyproject
 
@@ -86,7 +86,7 @@ In the CUDA file: `test` → `dev` → `all`, plus feature extras (`diffusion`,
   [ci_install_dependency.sh:726](../../scripts/ci/cuda/ci_install_dependency.sh#L726)
   instead — with `antlr4-python3-runtime==4.9.3` declared in the `test` extra
   purely to keep that later install compatible
-  ([pyproject.toml:167-173](../pyproject.toml#L167-L173)). The XPU variant ignores
+  ([pyproject.toml:167-173](../../python/pyproject.toml#L167-L173)). The XPU variant ignores
   this rule and uses `sgl-kernel @ git+https://...sgl-kernel-xpu.git`; it isn't
   uploaded to PyPI.
 - **Alternate wheel indexes.** Resolved at install time, not declared:
@@ -96,18 +96,18 @@ In the CUDA file: `test` → `dev` → `all`, plus feature extras (`diffusion`,
 - **Build-time deps of sdists.** `[tool.uv.extra-build-dependencies]` injects
   `setuptools, torch` for `st-attn` and `vsa`, which need torch importable to build.
 - **Hugging Face Hub kernels.** `[tool.kernels.dependencies]` at
-  [pyproject.toml:254](../pyproject.toml#L254) pulls
+  [pyproject.toml:254](../../python/pyproject.toml#L254) pulls
   `kernels-community/sgl-flash-attn3` through the `kernels` library — a dependency
   channel that isn't pip at all.
 
 ## Version and Rust-extension wiring in setup.py
 
 Version is dynamic: setuptools-scm derives it from git via a custom
-`git_describe_command` ([tools/get_version_tag.py](../tools/get_version_tag.py)),
+`git_describe_command` ([tools/get_version_tag.py](../../scripts/release/get_version_tag.py)),
 writing `sglang/_version.py`, with `fallback_version = "0.0.0.dev0"` so editable
 installs work without `.git` metadata.
 
-Rust extensions are **not** listed anywhere in pyproject. [setup.py](../setup.py)
+Rust extensions are **not** listed anywhere in pyproject. [setup.py](../../python/setup.py)
 shells out to `cargo metadata` against [rust/Cargo.toml](../../rust/Cargo.toml)
 and builds one PyO3 module per crate declaring:
 
@@ -165,12 +165,12 @@ Two registered tests police the manifests:
 
 ## Practical upshot when adding a dependency
 
-1. Edit [python/pyproject.toml](../pyproject.toml) in alphabetical position, with
+1. Edit [python/pyproject.toml](../../python/pyproject.toml) in alphabetical position, with
    a comment justifying any exact pin.
 2. Decide consciously whether it also belongs in the four platform variants —
    nothing propagates automatically.
 3. Nothing will catch an omission until that platform's CI job or Docker build
    runs; there's no lockfile or resolver check to lean on.
 
-See also [vscode-pylance-env-setup.md](vscode-pylance-env-setup.md) for the local
+See also [SETUP_ENV.md](../../studyIterations/SETUP_ENV.md) for the local
 editor environment (which installs none of this).

@@ -3,19 +3,20 @@
 Asked `Claude Code`:
 
     I cloned this repo, opened in VS Code, I can see it contains Python code and pyproject.toml, and the outside shell's
-    default Python intepretor /opt/homebrew/bin/python3 was picked up; Create a script under /Users/WChen/tmp/sglang/python
-    to set up Python environment based on /Users/WChen/tmp/sglang/python/pyproject.toml, a MD file under the same directory
-    to document it.
+    default Python intepretor /opt/homebrew/bin/python3 was picked up; Create a script under studyIterations to set up
+    Python environment based on python/pyproject.toml, a MD file under the same directory to document it.
 
 ## Set Python environment
 
 `setup_env.sh` (same directory) creates a project-local virtualenv and installs
 SGLang into it as an editable install, using the pyproject that matches your
-machine.
+machine. The script lives here, but the package it installs — and every
+pyproject variant it chooses between — lives in the repo's `python/` directory;
+it resolves that from the repo root, so it works from any cwd.
 
 ```bash
 # from the repo root
-./python/setup_env.sh
+./studyIterations/setup_env.sh
 source .venv/bin/activate
 ```
 
@@ -41,7 +42,7 @@ Two things make a plain `pip install -e python` wrong on most machines:
 1. **`python/pyproject.toml` is the CUDA/Linux build.** It pins
    `torch==2.13.0`, `flashinfer_python[cu13]`, `flash-attn-4`, `sgl-deep-ep`
    and friends — none of which resolve on macOS. SGLang keeps one pyproject per
-   platform in this directory (`pyproject_other.toml` for MPS/ROCm/HPU/MUSA,
+   platform in `python/` (`pyproject_other.toml` for MPS/ROCm/HPU/MUSA,
    plus `pyproject_cpu.toml`, `pyproject_npu.toml`, `pyproject_xpu.toml`), and
    `setup.py` only ever reads `python/pyproject.toml`. The upstream docs tell
    you to `mv pyproject_other.toml pyproject.toml`, which permanently dirties
@@ -146,7 +147,7 @@ eval "$(direnv hook zsh)"     # oh-my-zsh: add it to plugins=(git direnv) instea
 # 2. Write <repo>/.envrc
 cat > .envrc <<'EOF'
 if [ ! -x .venv/bin/python ]; then
-  log_error "No .venv found — run ./python/setup_env.sh first"
+  log_error "No .venv found — run ./studyIterations/setup_env.sh first"
 else
   export VIRTUAL_ENV="$PWD/.venv"
   export VIRTUAL_ENV_PROMPT="(sglang)"

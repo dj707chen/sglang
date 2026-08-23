@@ -10,7 +10,7 @@
 > — and then the git hook was deliberately removed again with
 > `pre-commit uninstall`. Commits in this clone currently run no hooks. For the
 > current state and the full enable/disable/run reference, see
-> [pre-commit-setup.md](pre-commit-setup.md). This document remains accurate as
+> [pre-commit-setup.md](pre-commit_setup.md). This document remains accurate as
 > the record of the original diagnosis.
 
 ## The situation

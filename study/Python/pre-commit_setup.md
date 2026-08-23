@@ -5,7 +5,7 @@
 **Current state as of 2026-08-17: INSTALLED as a tool, but the git hook is UNINSTALLED.**
 Commits in this clone run no hooks.
 
-Companion note: [why-black-did-not-reformat.md](why-black-did-not-reformat.md) — the
+Companion note: [why-black-did-not-reformat.md](pre-commit_why-black-did-not-reformat.md) — the
 original investigation into why a hand-joined line survived a commit untouched.
 
 ## The mental model

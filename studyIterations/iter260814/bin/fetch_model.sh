@@ -54,7 +54,7 @@ case "$MODEL_SOURCE" in
 esac
 
 DOWNLOADER="$VENV/bin/$([[ $MODEL_SOURCE == hf ]] && echo hf || echo modelscope)"
-[[ -x "$DOWNLOADER" ]] || die "$MODEL_SOURCE CLI not found at $DOWNLOADER -- is the venv built? See python/SETUP_ENV.md"
+[[ -x "$DOWNLOADER" ]] || die "$MODEL_SOURCE CLI not found at $DOWNLOADER -- is the venv built? See studyIterations/SETUP_ENV.md"
 
 # Already done? `hf download` is itself incremental, but skipping entirely keeps
 # this cheap to call from other scripts.

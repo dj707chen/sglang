@@ -16,7 +16,7 @@ REPO_ROOT="$(cd "$RUN_DIR/../.." && pwd)"
 
 # The serving env used to live at $STUDY_ROOT/venvs/mps-py312, which was a
 # hand-rolled venv outside the repo. It is gone. The repo now builds the same
-# thing at <repo>/.venv via python/setup_env.sh -- Python 3.12, torch + MLX,
+# thing at <repo>/.venv via studyIterations/setup_env.sh -- Python 3.12, torch + MLX,
 # sglang installed editable -- so point at that instead of maintaining a second
 # copy. Override with SGLANG_STUDY_VENV to test against a different env.
 VENV="${SGLANG_STUDY_VENV:-$REPO_ROOT/.venv}"

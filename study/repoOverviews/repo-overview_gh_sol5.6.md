@@ -18,7 +18,7 @@ SGLang is several related systems in one repository. The central piece is **SRT,
 | [`python/sglang/multimodal_gen`](../../python/sglang/multimodal_gen/README.md) | Separate image/video/diffusion inference runtime |
 | [`python/sglang/cli`](../../python/sglang/cli/main.py#L12) | `sglang serve`, `generate`, and utility commands |
 | [`python/sglang/benchmark`](../../python/sglang/benchmark/serving.py) | Installed benchmark entry points |
-| [`rust/`](../) | Native gRPC, multimodal, and optional Rust server extensions |
+| [`rust/`](../../rust/) | Native gRPC, multimodal, and optional Rust server extensions |
 | [`sgl-model-gateway/`](../../sgl-model-gateway/) | Separate fleet router for regular and prefill/decode workers |
 | [`test/registered/`](../../test/registered/) | Custom CI-registered integration, model, kernel, and unit tests |
 

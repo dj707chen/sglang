@@ -3,8 +3,8 @@
 ## Our works
 
 - This folder
-- [How to Set up Development Environment](../python/SETUP_ENV.md)
-- [Python Study](../python/study)
+- [How to Set up Development Environment](../studyIterations/SETUP_ENV.md)
+- [Python Study](Python)
 - [Local Runs](../studyIterations)
 
 ## Talks

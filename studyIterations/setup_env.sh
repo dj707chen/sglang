@@ -4,7 +4,8 @@
 #
 # Set up a local Python environment for developing SGLang from this checkout.
 #
-# The environment is built from the pyproject in this directory. SGLang ships
+# The environment is built from the pyproject in the repo's `python/` package
+# directory -- this script lives outside it. SGLang ships
 # one pyproject per hardware platform (pyproject.toml is the CUDA one,
 # pyproject_other.toml covers MPS/ROCm/HPU/MUSA, plus _cpu / _npu / _xpu), and
 # setup.py only ever reads `python/pyproject.toml`. This script picks the right
@@ -17,6 +18,9 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+# The installable package and every pyproject variant live in <repo>/python,
+# which is NOT this script's directory -- resolve them from the repo root.
+PYTHON_DIR="${REPO_ROOT}/python"
 
 PYTHON_VERSION="3.12"
 VENV_DIR="${REPO_ROOT}/.venv"
@@ -36,7 +40,7 @@ die() {
 
 usage() {
   cat <<'EOF'
-Usage: python/setup_env.sh [options]
+Usage: studyIterations/setup_env.sh [options]
 
 Creates a virtualenv and installs sglang into it as an editable install,
 using the pyproject that matches this machine.
@@ -57,9 +61,9 @@ Options:
   -h, --help         Show this help.
 
 Examples:
-  python/setup_env.sh                      # auto-detect platform
-  python/setup_env.sh --extras dev_mps     # macOS + test dependencies
-  python/setup_env.sh --variant empty      # lightweight, torch-free
+  studyIterations/setup_env.sh                      # auto-detect platform
+  studyIterations/setup_env.sh --extras dev_mps     # macOS + test dependencies
+  studyIterations/setup_env.sh --variant empty      # lightweight, torch-free
 EOF
 }
 
@@ -171,14 +175,14 @@ xpu)
 *) die "unknown variant '${VARIANT}' (see --help)" ;;
 esac
 
-[[ -f "${SCRIPT_DIR}/${PYPROJECT_SRC}" ]] || die "missing ${SCRIPT_DIR}/${PYPROJECT_SRC}"
+[[ -f "${PYTHON_DIR}/${PYPROJECT_SRC}" ]] || die "missing ${PYTHON_DIR}/${PYPROJECT_SRC}"
 # --extras (including `--extras ""`) wins over the per-variant default.
 [[ -n "${EXTRAS_SET-}" ]] || EXTRAS="${DEFAULT_EXTRAS}"
 
 if [[ -n "${EXTRAS}" ]]; then
-  TARGET="${SCRIPT_DIR}[${EXTRAS}]"
+  TARGET="${PYTHON_DIR}[${EXTRAS}]"
 else
-  TARGET="${SCRIPT_DIR}"
+  TARGET="${PYTHON_DIR}"
 fi
 
 # --- 2. Rust extension modules ----------------------------------------------
@@ -221,7 +225,7 @@ fi
 
 # --- 4. Swap in the platform pyproject, install, then restore ----------------
 
-PYPROJECT="${SCRIPT_DIR}/pyproject.toml"
+PYPROJECT="${PYTHON_DIR}/pyproject.toml"
 BACKUP=""
 restore_pyproject() {
   if [[ -n "${BACKUP}" && -f "${BACKUP}" ]]; then
@@ -236,7 +240,7 @@ trap restore_pyproject EXIT INT TERM
 if [[ "${PYPROJECT_SRC}" != "pyproject.toml" ]]; then
   BACKUP="$(mktemp "${TMPDIR:-/tmp}/sglang-pyproject.XXXXXX")"
   cp "${PYPROJECT}" "${BACKUP}"
-  cp "${SCRIPT_DIR}/${PYPROJECT_SRC}" "${PYPROJECT}"
+  cp "${PYTHON_DIR}/${PYPROJECT_SRC}" "${PYPROJECT}"
   log "Using ${PYPROJECT_SRC} as python/pyproject.toml for this install"
 fi
 
@@ -294,5 +298,5 @@ cat <<EOF
 Interpreter : ${VENV_PY}
 Activate    : source ${VENV_DIR}/bin/activate
 VS Code     : Cmd+Shift+P > "Python: Select Interpreter" > ${VENV_PY}
-Docs        : python/SETUP_ENV.md
+Docs        : studyIterations/SETUP_ENV.md
 EOF
