@@ -33,7 +33,14 @@ Then reload the window by
 ### IDE: IntelliJ
 
 - Go to File / Project Structure... / Project Settings / Project / SDK
-- Select Python 3.10 (sglang)
+- If the Python SDK based on .venv/bin/python has not been created
+  1. Click the + sigh at top to add a SDK
+  2. Add Python SDK from disk...
+  3. Existing environment
+  4. Click the ... to navigate .venv/bin
+  5. Select python
+- Mark the source root so IntelliJ sees the package (most reliable for editable installs):
+  right-click python in the Project view → Mark Directory as → Sources Root.
 
 ## Why a script and not just `pip install -e python`
 
