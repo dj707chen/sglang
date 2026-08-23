@@ -6,7 +6,7 @@ CEO of https://intentlab.ai/
 
 https://www.linkedin.com/in/yangqing-jia/
 
-## Jiarui Fang方佳瑞
+## Jiarui Fang 方佳瑞
 
 https://github.com/feifeibear
 
