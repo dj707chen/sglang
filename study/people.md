@@ -4,6 +4,7 @@
 
 - https://www.linkedin.com/in/yingsheng1123/
 - https://github.com/Ying1123
+- https://www.linkedin.com/feed/update/urn:li:activity:7403851204960907264/ - CTO on her (CEO)
 
 ## Lianmin Zheng 郑怜悯
 
