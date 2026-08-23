@@ -7,6 +7,18 @@ All material for studying SGLang are checked into the `study` branch, are under 
 - study: Any static files;
 - studyIterations: Multiple trials to run the SGLang on `macOS`, separated into directories with date suffix. 
 
+This branch also contains the `README_study.md`(this file).
+
+## Set up development environment
+
+Follow [SETUP_ENV.md](studyIterations/SETUP_ENV.md), quick setup:
+
+```bash
+# from the repo root
+./studyIterations/setup_env.sh
+source .venv/bin/activate
+```
+
 ## New iteration
 
 We created a base branch `iter_base`, which contains all things in `study` except the pass trial directories;
