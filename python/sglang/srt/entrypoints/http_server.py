@@ -2786,6 +2786,7 @@ def launch_server(
     1. The HTTP server, Engine, and TokenizerManager all run in the main process.
     2. Inter-process communication is done through IPC (each process uses a different port) via the ZMQ library.
     """
+    logger.info("Launching SRT server...")
     # Launch subprocesses
     (
         tokenizer_manager,
@@ -2800,6 +2801,7 @@ def launch_server(
         run_scheduler_process_func=run_scheduler_process_func,
         run_detokenizer_process_func=run_detokenizer_process_func,
     )
+    logger.info("subprocesses launched; _weight_cache_daemon_procs=%s", _weight_cache_daemon_procs)
 
     if envs.SGLANG_RUST_SERVER.get():
         # The Rust server serves api-server, tokenizer, and detokenizer, so the
