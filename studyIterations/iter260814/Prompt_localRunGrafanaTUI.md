@@ -1,5 +1,7 @@
 # Run a small model locally on MacBook Pro M3
 
+Also refer to ../Prompt_common.md.
+
 To understand how SGLang runs, how the component processes work together, run the inference of a LLM model locally on this MacBook Pro M3.
 
 Plan first, save the plan in localRunPlan.md, let me review before you implement it;
@@ -10,7 +12,6 @@ When you implement the plan phase by phase, update the plan doc with:
 1. Choose a small open weight LLM model, serve it via SGLang locally;
    - Tell me how you selected the model;
    - Where you tried to download from;
-   - When download the model, save it under studyIterations/models so they could be shared, ignore this directory in git.
 2. I'm interested in the details of major components (not limited, I may miss some):
    - API server, how the Rust server runs?
    - Tokenizer, TokenizerManager
