@@ -52,11 +52,11 @@ CC's Diagnosis: this is an IntelliJ/PyCharm resolution issue, not a real packagi
 Why IntelliJ complains while VS Code doesn't: sglang is installed editable into .venv via
 a dynamic editable-install hook — site-packages contains only:
 
-  __editable__.sglang-0.5.18...pth → executes __editable___sglang_..._finder.py
-  the actual sources live at sglang and are found at runtime by that import hook
-  Pylance resolves it because it honors the editable hook (and your working set).
-  IntelliJ's indexer only looks for a real sglang/ directory (or a plain path .pth)
-  under site-packages — there isn't one, so it reports "package not found" at the from sglang.srt... imports.
+    __editable__.sglang-0.5.18...pth → executes __editable___sglang_..._finder.py
+    the actual sources live at sglang and are found at runtime by that import hook
+    Pylance resolves it because it honors the editable hook (and your working set).
+    IntelliJ's indexer only looks for a real sglang/ directory (or a plain path .pth)
+    under site-packages — there isn't one, so it reports "package not found" at the from sglang.srt... imports.
 
 Fix in IntelliJ:
 
