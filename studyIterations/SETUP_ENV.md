@@ -32,6 +32,9 @@ Then reload the window by
 
 ### IDE: IntelliJ
 
+IntelliJ configures the SDKs at application level, not at project level, this makes the tool not be able to configure the Python SDK as above.
+
+Manually configure project specific Python SDK:
 - Go to File / Project Structure... / Project Settings / Project / SDK
 - If the Python SDK based on .venv/bin/python has not been created
   1. Click the + sigh at top to add a SDK
