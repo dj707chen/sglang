@@ -2,7 +2,7 @@
 
 > Study note captured from a Claude Code session.
 > Working directory: `/Users/WChen/AI/sglangTry/sglang/python`
-> Branch: `study1` @ `687967c70d`
+> Branch: `study` @ `687967c70d`
 > Model: Claude Opus 5 (1M context)
 
 ---

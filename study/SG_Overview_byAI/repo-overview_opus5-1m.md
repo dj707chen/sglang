@@ -2,7 +2,7 @@
 
 > Study note captured from a Claude Code session.
 > Repository: `/Users/WChen/AI/sglangTry/sglang`
-> Branch: `study1` @ `687967c70d`
+> Branch: `study` @ `687967c70d`
 > Model: Claude Opus 5 (1M context) — `claude-opus-5[1m]`
 > Date: 2026-08-12
 >
