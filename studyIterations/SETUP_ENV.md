@@ -42,8 +42,29 @@ Manually configure project specific Python SDK:
   3. Existing environment
   4. Click the ... to navigate .venv/bin
   5. Select python
+
+There are still errors like
+
+    python/sglang/srt/managers/multi_tokenizer_mixin.py, IntelliJ editor displays error that the sglang package is not found
+
+CC's Diagnosis: this is an IntelliJ/PyCharm resolution issue, not a real packaging problem.
+
+Why IntelliJ complains while VS Code doesn't: sglang is installed editable into .venv via
+a dynamic editable-install hook — site-packages contains only:
+
+  __editable__.sglang-0.5.18...pth → executes __editable___sglang_..._finder.py
+  the actual sources live at sglang and are found at runtime by that import hook
+  Pylance resolves it because it honors the editable hook (and your working set).
+  IntelliJ's indexer only looks for a real sglang/ directory (or a plain path .pth)
+  under site-packages — there isn't one, so it reports "package not found" at the from sglang.srt... imports.
+
+Fix in IntelliJ:
+
 - Mark the source root so IntelliJ sees the package (most reliable for editable installs):
   right-click python in the Project view → Mark Directory as → Sources Root.
+- Go to File / Reload All from Disk
+
+That makes IntelliJ resolve sglang from the checkout directly, matching the editable install. (Reinstalling non-editable is not recommended — you'd lose live edits.)
 
 ## Why a script and not just `pip install -e python`
 
