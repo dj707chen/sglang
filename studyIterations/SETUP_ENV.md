@@ -62,7 +62,7 @@ Fix in IntelliJ:
 
 - Mark the source root so IntelliJ sees the package (most reliable for editable installs):
   right-click python in the Project view → Mark Directory as → Sources Root.
-- Go to File / Reload All from Disk
+- Go to File / Reload All from Disk (If editor still displays errors, restart IntelliJ)
 
 That makes IntelliJ resolve sglang from the checkout directly, matching the editable install. (Reinstalling non-editable is not recommended — you'd lose live edits.)
 
