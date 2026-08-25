@@ -10,6 +10,8 @@ Companion to [localRunPlan.md](localRunPlan.md) (what was built and why) and
 ```bash
 cd studyIterations/iter260814
 
+./fetch_model.sh          # One time
+
 ./bin/restart_all.sh      # the big red button: stop everything, start it all, smoke test
 ./bin/status.sh           # what's up, what's down, where the logs are
 ./bin/tui.sh              # live terminal dashboard (q to quit)
@@ -211,3 +213,4 @@ and [components.md](components.md) §7 explains the bind/connect asymmetry.
 | TUI queue panel always 0 | correct — `max_running_requests` is 4096. Use `--max-running-requests 2`. |
 | pcap growing fast | Prometheus scrapes; stop the capture with `sudo pkill -f tcpdump` |
 | `_core` import errors | the Rust server ext was built for a different Python; rebuild with `VIRTUAL_ENV` set explicitly |
+| `ERROR model not found at .../studyIterations/models/Qwen3-0.6B` | weights are gitignored, so a fresh clone or a cleaned tree has none. `./bin/fetch_model.sh` (~6 min, 1.4 GB from ModelScope), then re-run `restart_all.sh`. |

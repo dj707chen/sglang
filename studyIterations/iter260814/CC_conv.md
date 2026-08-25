@@ -525,3 +525,32 @@ telemetry), with copy-pasteable commands for each, what each is good for, plus a
 troubleshooting table and an explicit statement of what is *not* capturable.
 
 ---
+
+## Turn 10 — 2026-08-24
+
+### User
+
+> Fix error: ./restart_all.sh ... [23:00:19] ERROR model not found at .../studyIterations/models/Qwen3-0.6B
+
+### Assistant
+
+Not a code bug: `studyIterations/models/` is **gitignored** (`models/`, first rule in
+`studyIterations/.gitignore`), so the weights are not carried by the checkout and the
+directory had simply gone away. Confirmed it was a genuine absence, not a partial
+download — no `studyIterations/models/` at all, nothing under `~/.cache/modelscope/hub`,
+and the HF cache holding only a `refs/main` stub (4 KB, metadata only, exactly the
+blocked-CDN signature `fetch_model.sh` warns about).
+
+`restart_all.sh` does not auto-fetch; it goes straight to `start_sglang.sh`, which
+correctly hard-fails on the missing path. Ran **`./bin/fetch_model.sh`** — ModelScope,
+1.4 GB, ~6 min — then re-ran `restart_all.sh`: all four endpoints UP, `max_total_num_tokens
+= 32768`, device `mps`, and the smoke test passed all three legs (generate, chat
+completions with the `qwen3` reasoning split, 26-chunk SSE stream).
+
+**Added a runbook troubleshooting row** for this symptom, since a cleaned tree or a fresh
+clone reproduces it every time and the fix is one command.
+
+Left `restart_all.sh` alone rather than making it auto-fetch — a silent 1.4 GB download
+inside a "restart the servers" button is a surprise worth keeping explicit.
+
+---
